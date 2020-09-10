@@ -1,0 +1,34 @@
+.product_rating{
+    display: flex;
+}
+.product{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+    max-height: 400px;
+    min-width: 100px;
+    width: 100%;
+    background-color: rgba(208, 235, 222, 0.9);
+    margin: 10px;
+    z-index: 1;
+}
+.product_price{
+    margin-top: 5px;
+}
+.product_info{
+    height: 100px;
+    margin-bottom: 15px;
+}
+.product > img{
+    max-width: 300px;
+    width: 100%;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+.product > button{
+    background-color:rgb(128, 223, 91);
+    border: 1px;
+    border-radius: 1vw;
+}

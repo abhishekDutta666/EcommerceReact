@@ -1,48 +1,55 @@
-import React from "react";
-// import router
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import pages
-import About from "./pages/About";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import Error from "./pages/Error";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Products from "./pages/Products";
-import ProductDetails from "./pages/ProductDetails";
-// import header
-import Header from "./components/Header";
-import Alert from "./components/Alert";
-import PrivateRoute from "./components/PrivateRoute";
+import React, {useEffect} from 'react';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Header from "./Header";
+import Home from "./Home";
+import Checkout from "./Checkout";
+import Login from "./Login";
+import { useStateValue } from "./StateProvider";
+import './App.css';
+import { auth } from './Firebase';
+
+
 function App() {
+  const [{basket, user}, dispatch]=useStateValue();
+
+  useEffect(() => {
+    
+      const unsubscribe = auth.onAuthStateChanged((authUser)=>{
+        if(authUser){
+          dispatch({
+            type: "SET_USER",
+            user: authUser
+          });
+        }
+        else{
+          dispatch({
+            type: "SET_USER",
+            user: null
+          });
+        }
+      });
+    return ()=>{
+      unsubscribe();
+    }
+  }, []);
+
   return (
     <Router>
-      <Alert />
-      <Header />
+    <div className="App">
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/about">
-          <About />
-        </Route>
-        <Route exact path="/cart">
-          <Cart />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <PrivateRoute path="/checkout" name="john">
-          <Checkout />
-        </PrivateRoute>
-        <Route exact path="/products">
-          <Products />
-        </Route>
-        <Route path="/products/:id" children={<ProductDetails />}></Route>
-        <Route path="*">
-          <Error></Error>
-        </Route>
+      <Route path="/checkout">
+        <Header/>
+        <Checkout/>
+      </Route>
+      <Route path="/login">
+        <Login/>
+      </Route>
+      <Route path="/">
+      <Header/>
+      <Home/>
+      </Route>
       </Switch>
+    </div>
     </Router>
   );
 }
