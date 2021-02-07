@@ -1,1 +1,9 @@
-This is a very simple proof of concept ecommerce React app. I made this app to learn the basics of the react framework. This project uses react hooks and the context api to manage state. 
+# Frontend of an Ecommerce Application
+This web app is capable of authenticating an user, letting the user add items to the cart and move to the checkout page. 
+
+## Tools used 
+- React
+- Firebase
+
+Firebase is used primarily for authentication and storage of product pictures
+Create-React-App was used to build this app
